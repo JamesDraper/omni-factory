@@ -1,4 +1,7 @@
 {
+    "name":        "jamesdraper/omni-factory",
+    "description": "A factory for creating services based on static methods.",
+    "keywords":    ["container", "factory"],
     "autoload": {
         "psr-4": {
             "OmniFactory\\": "src"
