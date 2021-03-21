@@ -8,6 +8,7 @@
         }
     },
     "autoload-dev": {
+        "files": ["src/Factory.php"],
         "psr-4": {
             "Test\\": "test"
         }
