@@ -26,9 +26,13 @@ class Factory
 
     private string $const;
 
-    public static function create(callable $func): self
+    public static function create(?callable $func = null): self
     {
-        call_user_func($func, $config = new Config);
+        $config = new Config;
+
+        if ($func) {
+            call_user_func($func, $config);
+        }
 
         return new self(
             $config->getAliases(),
