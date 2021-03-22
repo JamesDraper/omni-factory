@@ -3,17 +3,19 @@ declare(strict_types=1);
 
 namespace Test;
 
-use LogicException;
 use OmniFactory\Factory;
 use OmniFactory\Config;
 
-use Test\Res\ClassWithNoMethod;
+use Test\Res\InterfaceMappingToClassWithNoMethodOrConstant;
+use Test\Res\ClassWithNoMethodOrConstant;
 use Test\Res\StaticMethodNoDependencies;
 use Test\Res\StaticMethodDependencies;
 use Test\Res\InterfaceWithConstant;
 use Test\Res\BoundClass;
 
 use PHPUnit\Framework\TestCase;
+
+use LogicException;
 
 class FactoryTest extends TestCase
 {
@@ -78,6 +80,16 @@ class FactoryTest extends TestCase
         $this->expectException(LogicException::class);
 
         ($this->factory)(ClassWithNoMethodOrConstant::class);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_fail_if_the_class_has_a_constant_mapping_it_to_a_class_that_cannot_be_built(): void
+    {
+        $this->expectException(LogicException::class);
+
+        ($this->factory)(InterfaceMappingToClassWithNoMethodOrConstant::class);
     }
 
     protected function setUp(): void
