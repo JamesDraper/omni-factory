@@ -60,9 +60,6 @@ class Factory
 
                 return $this->objs[$pathOrAlias] = $this($pathOrAlias);
 
-            case $hasConst && $hasMethod:
-                throw $this->createResolutionException($pathOrAlias, 'found both.');
-
             default:
                 if (!interface_exists($pathOrAlias) && !class_exists($pathOrAlias)) {
                     throw new LogicException(vsprintf('Class or interface not found: %s.', [
@@ -70,7 +67,11 @@ class Factory
                     ]));
                 }
 
-                throw $this->createResolutionException($pathOrAlias, 'found neither.');
+                throw new LogicException(vsprintf(
+                    'Expected %s to be either a class with the public constant '
+                        . '%s or the public static method %s but found neither.',
+                    [$pathOrAlias, $this->const, $this->method],
+                ));
         }
     }
 
@@ -79,16 +80,6 @@ class Factory
         $this->aliases = $aliases;
         $this->method  = $method;
         $this->const   = $const;
-    }
-
-    private function createResolutionException(string $path, string $suffix): LogicException
-    {
-        $message = vsprintf(
-            'expected %s to be either a class with the public constant %s or the public static method %s ',
-            [$path, $this->const, $this->method]
-        );
-
-        return new LogicException($message . $suffix);
     }
 }
 
