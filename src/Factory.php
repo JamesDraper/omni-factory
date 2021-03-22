@@ -48,7 +48,13 @@ class Factory
         }
 
         if (isset($this->aliases[$pathOrAlias])) {
-            $pathOrAlias = $this->aliases[$pathOrAlias];
+            $this->objs[$pathOrAlias] = $this(
+                $this->aliases[$pathOrAlias]
+            );
+
+            unset($this->aliases[$pathOrAlias]);
+
+            return $this->objs[$pathOrAlias];
         }
 
         switch (true) {
