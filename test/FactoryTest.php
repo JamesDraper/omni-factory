@@ -73,11 +73,11 @@ class FactoryTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_a_logic_exception_if_the_class_has_no_create_method(): void
+    public function it_should_fail_if_the_class_cannot_be_built(): void
     {
         $this->expectException(LogicException::class);
 
-        ($this->factory)(ClassWithNoMethod::class);
+        ($this->factory)(ClassWithNoMethodOrConstant::class);
     }
 
     protected function setUp(): void

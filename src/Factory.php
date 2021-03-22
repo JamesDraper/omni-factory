@@ -16,7 +16,7 @@ use function constant;
 use function vsprintf;
 use function defined;
 
-class Factory
+final class Factory
 {
     private array $objs = [];
 
@@ -48,13 +48,10 @@ class Factory
         }
 
         if (isset($this->aliases[$pathOrAlias])) {
-            $this->objs[$pathOrAlias] = $this(
-                $this->aliases[$pathOrAlias]
-            );
-
+            $classPath = $this->aliases[$pathOrAlias];
             unset($this->aliases[$pathOrAlias]);
 
-            return $this->objs[$pathOrAlias];
+            return $this->objs[$pathOrAlias] = $this($classPath);
         }
 
         switch (true) {
