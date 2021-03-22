@@ -58,10 +58,10 @@ class Factory
         }
 
         switch (true) {
-            case $hasMethod = is_callable([$pathOrAlias, $this->method]):
+            case is_callable([$pathOrAlias, $this->method]):
                 return $this->objs[$pathOrAlias] = call_user_func([$pathOrAlias, $this->method], $this);
 
-            case $hasConst = @defined($pathOrAlias . '::' . $this->const):
+            case @defined($pathOrAlias . '::' . $this->const):
                 $pathOrAlias = constant($pathOrAlias . '::' . $this->const);
 
                 return $this->objs[$pathOrAlias] = $this($pathOrAlias);
