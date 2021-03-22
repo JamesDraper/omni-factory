@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace Test;
 
+use LogicException;
 use OmniFactory\Factory;
 use OmniFactory\Config;
 
+use Test\Res\ClassWithNoMethod;
 use Test\Res\StaticMethodNoDependencies;
 use Test\Res\StaticMethodDependencies;
 use Test\Res\InterfaceWithConstant;
@@ -66,6 +68,16 @@ class FactoryTest extends TestCase
         $result2 = ($this->factory)(InterfaceWithConstant::class);
 
         $this->assertSame($result1, $result2);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_throw_a_logic_exception_if_the_class_has_no_create_method(): void
+    {
+        $this->expectException(LogicException::class);
+
+        ($this->factory)(ClassWithNoMethod::class);
     }
 
     protected function setUp(): void
