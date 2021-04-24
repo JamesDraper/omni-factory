@@ -1,5 +1,5 @@
 {
-    "name":        "jamesdraper/omni-factory",
+    "name":        "james-draper/omni-factory",
     "description": "A factory for creating services based on static methods.",
     "keywords":    ["container", "factory"],
     "autoload": {
