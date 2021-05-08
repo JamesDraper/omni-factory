@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace OmniFactory;
 
-use InvalidArgumentException;
+use OmniFactory\Exception\ConfigException;
+
 use Throwable;
 
 use function array_walk;
@@ -52,7 +53,7 @@ class Config
         try {
             array_walk($aliases, fn($path, $alias) => $this->addAlias($alias, $path));
         } catch (Throwable $e) {
-            throw new InvalidArgumentException(
+            throw new ConfigException(
                 '$aliases must be an associative array mapping aliases to class paths.'
             );
         }

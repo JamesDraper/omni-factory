@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace OmniFactory;
 
-use LogicException;
+use OmniFactory\Exception\CreateException;
 
 use function interface_exists;
 use function call_user_func;
@@ -62,12 +62,12 @@ final class Factory
 
             default:
                 if (!interface_exists($pathOrAlias) && !class_exists($pathOrAlias)) {
-                    throw new LogicException(vsprintf('Class or interface not found: %s.', [
+                    throw new CreateException(vsprintf('Class or interface not found: %s.', [
                         $pathOrAlias,
                     ]));
                 }
 
-                throw new LogicException(vsprintf(
+                throw new CreateException(vsprintf(
                     'Expected %s to be either a class with the public constant '
                         . '%s or the public static method %s but found neither.',
                     [$pathOrAlias, $this->const, $this->method],

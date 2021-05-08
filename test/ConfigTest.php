@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace Test;
 
+use OmniFactory\Exception\ConfigException;
 use OmniFactory\Config;
 
 use PHPUnit\Framework\TestCase;
-
-use InvalidArgumentException;
 
 class ConfigTest extends TestCase
 {
@@ -177,7 +176,7 @@ class ConfigTest extends TestCase
      */
     public function it_should_throw_an_exception_when_addAliases_is_passed_an_array(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(ConfigException::class);
 
         $this->config->addAliases(['A', 'B']);
     }
@@ -243,7 +242,7 @@ class ConfigTest extends TestCase
      */
     public function it_should_throw_an_exception_when_setAliases_is_passed_an_array(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(ConfigException::class);
 
         $this->config->setAliases(['A', 'B']);
     }
