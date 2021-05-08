@@ -3,15 +3,12 @@ declare(strict_types=1);
 
 namespace OmniFactory;
 
-use InvalidArgumentException;
 use LogicException;
-use Throwable;
 
 use function interface_exists;
 use function call_user_func;
 use function class_exists;
 use function is_callable;
-use function array_walk;
 use function constant;
 use function vsprintf;
 use function defined;
@@ -83,70 +80,5 @@ final class Factory
         $this->aliases = $aliases;
         $this->method  = $method;
         $this->const   = $const;
-    }
-}
-
-class Config
-{
-    private string $const = 'CREATED_BY';
-
-    private string $method = 'create';
-
-    private array $aliases = [];
-
-    public function setConst(string $const): self
-    {
-        $this->const = $const;
-
-        return $this;
-    }
-
-    public function getConst(): string
-    {
-        return $this->const;
-    }
-
-    public function setMethod(string $method): self
-    {
-        $this->method = $method;
-
-        return $this;
-    }
-
-    public function getMethod(): string
-    {
-        return $this->method;
-    }
-
-    public function setAliases(array $aliases): self
-    {
-        $this->aliases = [];
-
-        return $this->addAliases($aliases);
-    }
-
-    public function addAliases(array $aliases): self
-    {
-        try {
-            array_walk($aliases, fn($path, $alias) => $this->addAlias($alias, $path));
-        } catch (Throwable $e) {
-            throw new InvalidArgumentException(
-                '$aliases must be an associative array mapping aliases to class paths.'
-            );
-        }
-
-        return $this;
-    }
-
-    public function addAlias(string $alias, string $path): self
-    {
-        $this->aliases[$alias] = $path;
-
-        return $this;
-    }
-
-    public function getAliases(): array
-    {
-        return $this->aliases;
     }
 }
